@@ -16,10 +16,7 @@ module.exports = function cloneDeep(src) {
   var length = keys.length;
   while (i < length) {
     var key = keys[i];
-    var srcValue = src[key];
-    if (srcValue !== undefined) {
-      returnValue[key] = cloneDeep(srcValue);
-    }
+    returnValue[key] = cloneDeep(src[key]);
     i++;
   }
 

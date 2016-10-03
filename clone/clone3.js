@@ -8,12 +8,8 @@ module.exports = function cloneDeep(src) {
   else if (_.isArray(src)) returnValue = [];
   else return src;
 
-  _.forEach(_.keys(src), function (key) {
-    var srcValue = src[key];
-    if (!_.isUndefined(srcValue)) {
-      returnValue[key] = cloneDeep(srcValue);
-    }
+  _.forEach(src, function (value, key) {
+    returnValue[key] = cloneDeep(value);
   });
-
   return returnValue;
 };

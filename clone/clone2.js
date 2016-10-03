@@ -12,10 +12,7 @@ module.exports = function cloneDeep(src) {
   else return src;
 
   Object.keys(src).forEach(function (key) {
-    var srcValue = src[key];
-    if (srcValue !== undefined) {
-      returnValue[key] = cloneDeep(srcValue);
-    }
+    returnValue[key] = cloneDeep(src[key]);
   });
 
   return returnValue;
