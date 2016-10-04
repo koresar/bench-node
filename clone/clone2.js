@@ -7,8 +7,8 @@ module.exports = function cloneDeep(src) {
   }
 
   var returnValue;
-  if (isObject(src)) returnValue = {};
-  else if (Array.isArray(src)) returnValue = [];
+  if (Array.isArray(src)) returnValue = [];
+  else if (isObject(src)) returnValue = {};
   else return src;
 
   Object.keys(src).forEach(function (key) {

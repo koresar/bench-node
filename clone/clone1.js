@@ -1,17 +1,19 @@
 function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
+  return value !== null && typeof value === 'object';
 }
+
+var isArray = Array.isArray;
+var Okeys = Object.keys;
 
 module.exports = function cloneDeep(src) {
   if (src === undefined) return;
 
   var returnValue;
-  if (isObject(src)) returnValue = {};
-  else if (Array.isArray(src)) returnValue = [];
+  if (isArray(src)) returnValue = [];
+  else if (isObject(src)) returnValue = {};
   else return src;
 
-  var keys = Object.keys(src);
+  var keys = Okeys(src);
   var i = 0;
   var length = keys.length;
   while (i < length) {
