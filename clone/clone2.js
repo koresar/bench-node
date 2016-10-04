@@ -1,10 +1,10 @@
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
-}
-
 module.exports = function cloneDeep(src) {
   if (src === undefined) return;
+
+  function isObject(value) {
+    var type = typeof value;
+    return value != null && (type == 'object' || type == 'function');
+  }
 
   var returnValue;
   if (isObject(src)) returnValue = {};
