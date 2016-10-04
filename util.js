@@ -36,7 +36,7 @@ function MemoryBar() {
     });
     this.maxUsed = 0;
     this.terminate();
-    if (gc) gc();
+    if (typeof gc !== "undefined") gc();
   };
 
   return bar;

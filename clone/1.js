@@ -7,7 +7,7 @@ var round2 = require('../util').round2;
 
 var suite = new Benchmark.Suite();
 
-var json = require('../3MB.json');
+var json = require('./3MB.json');
 var clone1 = require('./clone1');
 var clone2 = require('./clone2');
 var clone3 = require('./clone3');
