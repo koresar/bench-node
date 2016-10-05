@@ -13,7 +13,7 @@ var clone1 = require('./clone1');
 console.log(process.version, toHumanSize(JSON.stringify(json).length), 'JSON');
 
 suite
-  .add('NATIVE', function () {
+  .add('>JSON>', function () {
     JSON.parse(JSON.stringify(json));
     bar.refresh();
   })
@@ -21,7 +21,7 @@ suite
     _.cloneDeep(json);
     bar.refresh();
   })
-  .add('CLONE1', function () {
+  .add('MIN MALLOC', function () {
     clone1(json);
     bar.refresh();
   })

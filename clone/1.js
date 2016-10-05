@@ -15,15 +15,15 @@ var clone3 = require('./clone3');
 console.log(process.version, toHumanSize(JSON.stringify(json).length), 'JSON');
 
 suite
-  .add('CLONE1', function () {
+  .add('MIN MALLOC', function () {
     clone1(json);
     bar.refresh();
   })
-  .add('CLONE2', function () {
+  .add('1 SCOPED FN', function () {
     clone2(json);
     bar.refresh();
   })
-  .add('CLONE3', function () {
+  .add('2 SCOPED FN', function () {
     clone3(json);
     bar.refresh();
   })

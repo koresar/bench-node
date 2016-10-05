@@ -1,15 +1,18 @@
-var _ = require('lodash');
-
 module.exports = function cloneDeep(src) {
-  if (_.isUndefined(src)) return;
+  if (src === undefined) return;
+
+  function isObject(value) {
+    return value !== null && typeof value === 'object';
+  }
 
   var returnValue;
-  if (_.isArray(src)) returnValue = [];
-  else if (_.isObject(src)) returnValue = {};
+  if (Array.isArray(src)) returnValue = [];
+  else if (isObject(src)) returnValue = {};
   else return src;
 
-  _.forEach(src, function (value, key) {
-    returnValue[key] = cloneDeep(value);
+  Object.keys(src).forEach(function (key) {
+    returnValue[key] = cloneDeep(src[key]);
   });
+
   return returnValue;
 };

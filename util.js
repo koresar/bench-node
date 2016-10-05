@@ -17,14 +17,26 @@ function sleep(time) {
 function MemoryBar() {
   var ProgressBar = require('progress');
   var maxMem = 1024 * 1024 * 1024 / 4; // 256MB
-  var bar = new ProgressBar(':heap :bar ' + toHumanSize(maxMem), {
+  var bar = new ProgressBar(':caption |:bar ' + toHumanSize(maxMem), {
     total: maxMem, width: 80, renderThrottle: 40, complete: '#'
   });
   bar.maxMem = maxMem;
   bar.maxUsed = 0;
+  bar.lastMem = 0;
+  bar.jumpCalc = 0;
+  bar.gcCalls = 0;
 
   bar.refresh = function () {
     var currentHeap = process.memoryUsage().heapTotal;
+    if (this.lastMem < currentHeap) {
+      this.lastMem = currentHeap;
+    } else if (this.lastMem > currentHeap) {
+      this.jumpCalc += this.lastMem - currentHeap;
+      this.lastMem = currentHeap;
+      this.gcCalls++;
+    } else {
+      return;
+    }
     this.maxUsed = currentHeap > this.maxUsed ? currentHeap : this.maxUsed;
     this.update(currentHeap / this.maxMem);
   };
@@ -32,10 +44,17 @@ function MemoryBar() {
   bar.finish = function (text) {
     sleep(40);
     this.update(this.maxUsed / this.maxMem, {
-      heap: text + ' peak ' + toHumanSize(this.maxUsed)
+      caption: text + '\tmax: ' + toHumanSize(this.maxUsed) +
+      ',\tmalloc: ' + toHumanSize(this.jumpCalc) +
+      ',\tGC calls: >= ' + this.gcCalls +
+      '\t'
     });
     this.maxUsed = 0;
+    this.lastMem = 0;
+    this.jumpCalc = 0;
+    this.gcCalls = 0;
     this.terminate();
+
     if (typeof gc !== "undefined") gc();
   };
 

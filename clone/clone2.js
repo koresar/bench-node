@@ -1,10 +1,9 @@
+function isObject(value) {
+  return value !== null && typeof value === 'object';
+}
+
 module.exports = function cloneDeep(src) {
   if (src === undefined) return;
-
-  function isObject(value) {
-    var type = typeof value;
-    return value != null && (type == 'object' || type == 'function');
-  }
 
   var returnValue;
   if (Array.isArray(src)) returnValue = [];
