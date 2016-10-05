@@ -31,7 +31,7 @@ suite
 
   })
   .on('cycle', function (test) {
-    console.log(chalk.yellow(test.target.name, round(test.target.hz)));
+    console.log(test.target.name + ' ' + chalk.yellow(round(test.target.hz)));
   })
   .on('complete', function () {
     console.log('Fastest is ' + this.filter('fastest').map('name'));

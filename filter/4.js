@@ -31,7 +31,7 @@ suite
     bar.refresh();
   })
   .on('cycle', function (test) {
-    bar.finish(chalk.yellow(test.target.name, round(test.target.hz)));
+    bar.finish(test.target.name + ' ' + chalk.yellow(round(test.target.hz)));
   })
   .on('complete', function () {
     console.log('Fastest is ' + this.filter('fastest').map('name'));

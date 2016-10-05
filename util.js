@@ -1,3 +1,5 @@
+var chalk = require('chalk');
+
 function getArray(num) {
   var arr = [0, 1, null, {}, undefined, 'defined', NaN, +Infinity, -Infinity];
   for (var i = 0; i < 17; i++) arr = arr.concat(arr).concat(i);
@@ -5,8 +7,9 @@ function getArray(num) {
 }
 
 function toHumanSize(size) {
+  if (size === 0) return chalk.yellow('0 B      ');
   const e = Math.floor(Math.log(size) / Math.log(1024));
-  return (size / Math.pow(1024, e)).toFixed(2) + ' ' + ' KMGTP'.charAt(e) + 'B';
+  return chalk.yellow((size / Math.pow(1024, e)).toFixed(2) + ' ' + ' KMGTP'.charAt(e) + 'B');
 }
 
 function sleep(time) {
@@ -28,7 +31,7 @@ function MemoryBar() {
 
   bar.refresh = function () {
     var currentHeap = process.memoryUsage().heapTotal;
-    if (this.lastMem < currentHeap) {
+    if (this.lastMem < currentHeap || this.lastMem === 0) {
       this.lastMem = currentHeap;
     } else if (this.lastMem > currentHeap) {
       this.jumpCalc += this.lastMem - currentHeap;
@@ -45,8 +48,8 @@ function MemoryBar() {
     sleep(40);
     this.update(this.maxUsed / this.maxMem, {
       caption: text + '\tmax: ' + toHumanSize(this.maxUsed) +
-      ',\tmalloc: ' + toHumanSize(this.jumpCalc) +
-      ',\tGC calls: >= ' + this.gcCalls +
+      '\tmalloc: ' + toHumanSize(this.jumpCalc) +
+      '\tGC calls: >= ' + chalk.yellow(this.gcCalls) +
       '\t'
     });
     this.maxUsed = 0;
