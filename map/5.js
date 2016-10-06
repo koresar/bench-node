@@ -17,11 +17,11 @@ suite
     bar.refresh();
   })
   .add('MYLOOP', function () {
-    var result = [];
+    var result = Array(arr.length);
     var i = 0;
     var max = arr.length;
     while (i < max) {
-      result.push(!!arr[i]);
+      result[i] = !!arr[i];
       i++;
     }
     bar.refresh();
