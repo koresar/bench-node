@@ -93,8 +93,11 @@ function MemoryBar(maxDisplayMemBytes) {
       }
       this.lastMem = currentHeap;
     }
-    if (currentHeap > this.maxDisplayMem) currentHeap = this.maxDisplayMem;
-    this.update(currentHeap / this.maxDisplayMem);
+    if (currentHeap > this.maxDisplayMem) {
+      this.update(0.999)
+    } else {
+      this.update(currentHeap / this.maxDisplayMem);
+    }
   };
 
   bar.finish = function (target) {
