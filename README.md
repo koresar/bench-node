@@ -14,6 +14,7 @@ npm i
 
 ### Run a test on your current Node.js version
 
+Copy and run one of the following tests:
 ```sh
 node filter/1.js
 node filter/2.js
@@ -42,3 +43,4 @@ Run the test under several node.js versions like so:
 ```sh
 ./all_nodes.sh clone/1.js
 ```
+See the list of tests above.
