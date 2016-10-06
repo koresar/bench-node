@@ -1,10 +1,6 @@
-var Benchmark = require('benchmark');
-var chalk = require('chalk');
 var toHumanSize = require('../util').toHumanSize;
-var bar = require('../util').MemoryBar();
-var round2 = require('../util').round2;
-
-var suite = new Benchmark.Suite();
+var bar = require('../util').MemoryBar(300 * 1024 * 1024);
+var suite = require('../util').MemSuite(bar);
 
 var json = require('./3MB.json');
 var clone1 = require('./clone1');
@@ -25,12 +21,5 @@ suite
   .add('2 SCOPED FN', function () {
     clone3(json);
     bar.refresh();
-  })
-  .on('cycle', function (test) {
-    bar.finish(test.target.name + ' ' + chalk.yellow(round2(test.target.hz)));
-  })
-  .on('complete', function () {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-    console.log();
   })
   .run();

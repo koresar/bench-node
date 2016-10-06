@@ -59,9 +59,9 @@ function MemSuite(bar) {
     });
 }
 
-function MemoryBar() {
+function MemoryBar(maxMemBytes) {
   var ProgressBar = require('progress');
-  var maxMem = 256 * 1024 * 1024; // 200MB
+  var maxMem = maxMemBytes || 256 * 1024 * 1024; // 200MB
   var bar = new ProgressBar(':X :bar', {
     total: maxMem, width: 80, renderThrottle: 40, complete: '#'
   });
@@ -87,22 +87,31 @@ function MemoryBar() {
   };
 
   bar.finish = function (target) {
+    if (target.name === 'WARMUP') return;
+
+    if (typeof gc !== "undefined") gc();
     sleep(40);
+    var currentHeap = process.memoryUsage().heapTotal;
+    if (currentHeap < this.lastMem) {
+      this.jumpCalc += this.lastMem - currentHeap;
+    }
+
     var oldWidth = this.width;
     this.width = 0;
     this.update(this.maxUsed / this.maxMem, {
-      X: padEnd(target.name, 12) + chalk.yellow(padEnd(round2(target.hz), 6)) +
+      X: padEnd(target.name, 12) + chalk.yellow(padEnd(round2(target.hz), 9)) +
       ' | max: ' + toHumanSize(this.maxUsed) +
       ' | malloc: >= ' + toHumanSize(this.jumpCalc) +
-      ' | GC calls: >= ' + chalk.yellow(padEnd(this.gcCalls, 4))
+      ' | GC calls: >= ' + chalk.yellow(padEnd(this.gcCalls, 3)) +
+      ' | Mem/cycle: >= ' + (target.hz < 1.0 ? '¯\\_(ツ)_/¯' : toHumanSize(this.jumpCalc / target.hz))
     });
     this.width = oldWidth;
+
     this.maxUsed = 0;
     this.lastMem = 0;
     this.jumpCalc = 0;
     this.gcCalls = 0;
     this.terminate();
-
     if (typeof gc !== "undefined") gc();
   };
 
