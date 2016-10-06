@@ -1,5 +1,5 @@
 var toHumanSize = require('../util').toHumanSize;
-var bar = require('../util').MemoryBar(300 * 1024 * 1024);
+var bar = require('../util').MemoryBar(384 * 1024 * 1024);
 var suite = require('../util').MemSuite(bar);
 
 var json = require('./3MB.json');

@@ -32,6 +32,9 @@ function sleep(time) {
 function PerfSuite() {
   var suite = new Benchmark.Suite();
   return suite
+    .on('start', function () {
+      process.stdout.write('warming up...');
+    })
     .add('WARMUP', function () {
       sleep(1000);
     })
@@ -47,6 +50,9 @@ function PerfSuite() {
 function MemSuite(bar) {
   var suite = new Benchmark.Suite();
   return suite
+    .on('start', function () {
+      process.stdout.write('warming up...');
+    })
     .add('WARMUP', function () {
       sleep(1000);
     })
@@ -59,57 +65,51 @@ function MemSuite(bar) {
     });
 }
 
-function MemoryBar(maxMemBytes) {
+function MemoryBar(maxDisplayMemBytes) {
   var ProgressBar = require('progress');
-  var maxMem = maxMemBytes || 256 * 1024 * 1024; // 200MB
+  var maxDisplayMem = maxDisplayMemBytes || 256 * 1024 * 1024; // 200MB
   var bar = new ProgressBar(':X :bar', {
-    total: maxMem, width: 80, renderThrottle: 40, complete: '#'
+    total: maxDisplayMem, width: 80, renderThrottle: 40, complete: '#'
   });
-  bar.maxMem = maxMem;
-  bar.maxUsed = 0;
+  bar.maxDisplayMem = maxDisplayMem;
   bar.lastMem = 0;
-  bar.jumpCalc = 0;
+  bar.mallocCalc = 0;
   bar.gcCalls = 0;
 
   bar.refresh = function () {
     var currentHeap = process.memoryUsage().heapTotal;
-    if (this.lastMem < currentHeap || this.lastMem === 0) {
+    if (this.lastMem === 0) {
       this.lastMem = currentHeap;
-    } else if (this.lastMem > currentHeap) {
-      this.jumpCalc += this.lastMem - currentHeap;
-      this.lastMem = currentHeap;
-      this.gcCalls++;
     } else {
-      return;
+      if (currentHeap < this.lastMem) {
+        this.gcCalls++;
+      }
+      if (currentHeap > this.lastMem) {
+        this.mallocCalc += currentHeap - this.lastMem;
+      }
+      this.lastMem = currentHeap;
     }
-    this.maxUsed = currentHeap > this.maxUsed ? currentHeap : this.maxUsed;
-    this.update(currentHeap / this.maxMem);
+    this.update(currentHeap / this.maxDisplayMem);
   };
 
   bar.finish = function (target) {
     if (target.name === 'WARMUP') return;
 
-    if (typeof gc !== "undefined") gc();
     sleep(40);
-    var currentHeap = process.memoryUsage().heapTotal;
-    if (currentHeap < this.lastMem) {
-      this.jumpCalc += this.lastMem - currentHeap;
-    }
 
     var oldWidth = this.width;
     this.width = 0;
-    this.update(this.maxUsed / this.maxMem, {
+    this.update(0, {
       X: padEnd(target.name, 12) + chalk.yellow(padEnd(round2(target.hz), 9)) +
-      ' | max: ' + toHumanSize(this.maxUsed) +
-      ' | malloc: >= ' + toHumanSize(this.jumpCalc) +
+      // ' | max: ' + toHumanSize(this.maxUsed) +
+      ' | malloc: >= ' + toHumanSize(this.mallocCalc) +
       ' | GC calls: >= ' + chalk.yellow(padEnd(this.gcCalls, 3)) +
-      ' | Mem/cycle: >= ' + (target.hz < 1.0 ? '¯\\_(ツ)_/¯' : toHumanSize(this.jumpCalc / target.hz))
+      ' | Mem/cycle: >= ' + (target.hz < 1.0 ? '¯\\_(ツ)_/¯' : toHumanSize(this.mallocCalc / target.hz))
     });
     this.width = oldWidth;
 
-    this.maxUsed = 0;
     this.lastMem = 0;
-    this.jumpCalc = 0;
+    this.mallocCalc = 0;
     this.gcCalls = 0;
     this.terminate();
     if (typeof gc !== "undefined") gc();
