@@ -71,7 +71,7 @@ function MemSuite(bar) {
 
 function MemoryBar(maxDisplayMemBytes) {
   var ProgressBar = require('progress');
-  var maxDisplayMem = maxDisplayMemBytes || 384 * 1024 * 1024; // 200MB
+  var maxDisplayMem = maxDisplayMemBytes || 256 * 1024 * 1024; // 200MB
   var bar = new ProgressBar(':X :bar', {
     total: maxDisplayMem, width: 100, renderThrottle: 40, complete: '#'
   });
@@ -93,6 +93,7 @@ function MemoryBar(maxDisplayMemBytes) {
       }
       this.lastMem = currentHeap;
     }
+    if (currentHeap > this.maxDisplayMem) currentHeap = this.maxDisplayMem;
     this.update(currentHeap / this.maxDisplayMem);
   };
 

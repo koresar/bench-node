@@ -12,7 +12,7 @@ suite
 
   })
   .add('LODASH', function () {
-    _filter(predicate);
+    _filter(arr, predicate);
 
   })
   .add('MYLOOP', function () {
