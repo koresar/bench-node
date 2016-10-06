@@ -38,7 +38,7 @@ Install node versions 0.10, 0.12, 4, 5, 6.
 for v in 0.10 0.12 4 5 6; do nvm install $v; done
 ```
 
-Run the scripts like so:
+Run the test under several node.js versions like so:
 ```sh
-./run.sh clone/1.js
+./all_nodes.sh clone/1.js
 ```
