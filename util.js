@@ -33,12 +33,16 @@ function PerfSuite() {
   var suite = new Benchmark.Suite();
   return suite
     .on('start', function () {
-      process.stdout.write('warming up...');
+      process.stdout.write('warming');
     })
     .add('WARMUP', function () {
       sleep(1000);
     })
     .on('cycle', function (test) {
+      if (test.target.name === 'WARMUP') {
+        process.stdout.write('\033[0G');
+        return;
+      }
       console.log(test.target.name + ' ' + chalk.yellow(round(test.target.hz)));
     })
     .on('complete', function () {
@@ -101,7 +105,6 @@ function MemoryBar(maxDisplayMemBytes) {
     this.width = 0;
     this.update(0, {
       X: padEnd(target.name, 12) + chalk.yellow(padEnd(round2(target.hz), 9)) +
-      // ' | max: ' + toHumanSize(this.maxUsed) +
       ' | malloc: >= ' + toHumanSize(this.mallocCalc) +
       ' | GC calls: >= ' + chalk.yellow(padEnd(this.gcCalls, 3)) +
       ' | Mem/cycle: >= ' + (target.hz < 1.0 ? '¯\\_(ツ)_/¯' : toHumanSize(this.mallocCalc / target.hz))
