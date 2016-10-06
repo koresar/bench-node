@@ -4,7 +4,7 @@
 
 Clone this repo.
 ```sh
-got clone https://github.com/koresar/bench-node.git
+git clone https://github.com/koresar/bench-node.git
 ```
 Install dependencies:
 ```sh
