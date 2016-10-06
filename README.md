@@ -12,13 +12,24 @@ cd bench-node
 npm i
 ```
 
-### Current Node.js version
+### Run a test on your current Node.js version
 
 ```sh
 node filter/1.js
+node filter/2.js
+node filter/3.js
+node filter/4.js
+node filter/5.js
+node map/1.js
+node map/2.js
+node map/3.js
+node map/4.js
+node map/5.js
+node clone/1.js
+node clone/2.js
 ```
 
-### Several Node.js versions
+### Run a test on the several Node.js versions
 
 Install [nvm](https://github.com/creationix/nvm#install-script).
 Restart your shell.
@@ -27,7 +38,7 @@ Install node versions 0.10, 0.12, 4, 5, 6.
 for v in 0.10 0.12 4 5 6; do nvm install $v; done
 ```
 
-Run the script:
+Run the scripts like so:
 ```sh
 ./run.sh clone/1.js
 ```
