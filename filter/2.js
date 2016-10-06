@@ -1,9 +1,5 @@
-var Benchmark = require('benchmark');
-var _ = require('lodash');
-var chalk = require('chalk');
-var round = require('../util').round;
-
-var suite = new Benchmark.Suite();
+var _filter = require('lodash/filter');
+var suite = require('../util').PerfSuite();
 
 var arr = require('../util').getArray(1000000);
 
@@ -16,7 +12,7 @@ suite
 
   })
   .add('LODASH', function () {
-    _.filter(arr, function (item) { return !!item; });
+    _filter(arr, function (item) { return !!item; });
 
   })
   .add('MYLOOP', function () {
@@ -29,12 +25,5 @@ suite
       i++;
     }
 
-  })
-  .on('cycle', function (test) {
-    console.log(test.target.name + ' ' + chalk.yellow(round(test.target.hz)));
-  })
-  .on('complete', function () {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-    console.log();
   })
   .run();

@@ -1,5 +1,4 @@
 var Benchmark = require('benchmark');
-var _ = require('lodash');
 var chalk = require('chalk');
 var toHumanSize = require('../util').toHumanSize;
 var bar = require('../util').MemoryBar();

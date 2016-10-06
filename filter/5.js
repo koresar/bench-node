@@ -1,9 +1,6 @@
-var Benchmark = require('benchmark');
-var _ = require('lodash');
-var chalk = require('chalk');
-var round = require('../util').round;
+var _filter = require('lodash/filter');
 var bar = require('../util').MemoryBar();
-var suite = new Benchmark.Suite();
+var suite = require('../util').MemSuite(bar);
 
 var arr = require('../util').getArray(1000);
 
@@ -16,7 +13,7 @@ suite
     bar.refresh();
   })
   .add('LODASH', function () {
-    _.filter(arr, predicate);
+    _filter(arr, predicate);
     bar.refresh();
   })
   .add('MYLOOP', function () {
@@ -29,12 +26,5 @@ suite
       i++;
     }
     bar.refresh();
-  })
-  .on('cycle', function (test) {
-    bar.finish(test.target.name + ' ' + chalk.yellow(round(test.target.hz)));
-  })
-  .on('complete', function () {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-    console.log();
   })
   .run();

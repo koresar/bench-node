@@ -1,5 +1,5 @@
 var Benchmark = require('benchmark');
-var _ = require('lodash');
+var _cloneDeep = require('lodash/cloneDeep');
 var chalk = require('chalk');
 var toHumanSize = require('../util').toHumanSize;
 var bar = require('../util').MemoryBar();
@@ -18,7 +18,7 @@ suite
     bar.refresh();
   })
   .add('_.CLONEDEEP', function () {
-    _.cloneDeep(json);
+    _cloneDeep(json);
     bar.refresh();
   })
   .add('MIN MALLOC ', function () {
