@@ -14,7 +14,7 @@ npm i
 
 ### Run a test on your current Node.js version
 
-Copy and run one of the following tests:
+Copy one of the lines below and execute in a shell:
 ```sh
 node filter/1.js
 node filter/2.js
@@ -26,6 +26,8 @@ node map/2.js
 node map/3.js
 node map/4.js
 node map/5.js
+node flatten/1.js
+node flatten/2.js
 node clone/1.js
 node clone/2.js
 ```

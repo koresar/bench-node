@@ -2,8 +2,9 @@ var Benchmark = require('benchmark');
 var chalk = require('chalk');
 var padEnd = require('lodash/padEnd');
 
+function noop(){}
 function getArray(num) {
-  var arr = [0, 1, null, {}, undefined, 'defined', NaN, +Infinity, -Infinity];
+  var arr = [0, 1, null, {}, undefined, 'defined', NaN, +Infinity, -Infinity, noop];
   for (var i = 0; i < 17; i++) arr = arr.concat(arr).concat(i);
   return arr.slice(0, num || 1000);
 }
