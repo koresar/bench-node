@@ -30,6 +30,7 @@ node flatten/1.js
 node flatten/2.js
 node clone/1.js
 node clone/2.js
+node throw/1.js
 ```
 
 ### Run a test on the several Node.js versions
