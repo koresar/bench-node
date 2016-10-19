@@ -109,7 +109,7 @@ function MemoryBar(maxDisplayMemBytes) {
     var oldWidth = this.width;
     this.width = 0;
     this.update(0, {
-      X: padEnd(target.name, 12) + chalk.yellow(padEnd(round2(target.hz), 9)) +
+      X: padEnd(target.name, 12) + ' ' + chalk.yellow(padEnd(round2(target.hz), 9)) +
       ' | malloc: >= ' + toHumanSize(this.mallocCalc) +
       ' | GC calls: >= ' + chalk.yellow(padEnd(this.gcCalls, 3)) +
       ' | Mem/cycle: >= ' + (target.hz < 1.0 ? '¯\\_(ツ)_/¯' : toHumanSize(this.mallocCalc / target.hz))
