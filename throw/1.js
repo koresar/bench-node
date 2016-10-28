@@ -26,7 +26,7 @@ suite
   .add('THROW EXCEPTION', function (deferred) {
     bar.refresh();
     Bluebird.try(function () {
-      return Promise.reject(error);
+      throw error;
     }).catch(function() {deferred.resolve();})
   }, {'defer': true})
   .run();
