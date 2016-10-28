@@ -37,9 +37,9 @@ node throw/1.js
 
 Install [nvm](https://github.com/creationix/nvm#install-script).
 Restart your shell.
-Install node versions 0.10, 0.12, 4, 5, 6.
+Install node versions 0.10, 0.12, 4, 5, 6, 7.
 ```sh
-for v in 0.10 0.12 4 5 6; do nvm install $v; done
+for v in 0.10 0.12 4 5 6 7; do nvm install $v; done
 ```
 
 Run the test under several node.js versions like so:
