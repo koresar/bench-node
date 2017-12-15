@@ -45,6 +45,6 @@ for v in 0.10 0.12 4 5 6 7; do nvm install $v; done
 
 Run the test under several node.js versions like so:
 ```sh
-./all_nodes.sh clone/1.js
+./all_nodes.sh args/1.js
 ```
 See the list of tests above.
