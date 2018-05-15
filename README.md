@@ -32,15 +32,16 @@ node clone/1.js
 node clone/2.js
 node throw/1.js
 node args/1.js
+node JSON.parse/1.js
 ```
 
 ### Run a test on the several Node.js versions
 
 Install [nvm](https://github.com/creationix/nvm#install-script).
 Restart your shell.
-Install node versions 0.10, 0.12, 4, 5, 6, 7, 8, 9.
+Install node versions 0.10, 0.12, 4, 5, 6, 7, 8, 9, 10.
 ```sh
-for v in 0.10 0.12 4 5 6 7 8 9; do nvm install $v; done
+for v in 0.10 0.12 4 5 6 7 8 9 10; do nvm install $v; done
 ```
 
 Run the test under several node.js versions like so:
