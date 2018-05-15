@@ -16,18 +16,18 @@ var flatten3 = require('./flatten3');
 suite
   .add('FLATTEN 1', function () {
     flatten1(arr, arr, [arr]);
-    bar.refresh();
+    // bar.refresh();
   })
   .add('FLATTEN 2', function () {
     flatten2(arr, arr, [arr]);
-    bar.refresh();
+    // bar.refresh();
   })
   .add('FLATTEN 3', function () {
     flatten3(arr, arr, [arr]);
-    bar.refresh();
+    // bar.refresh();
   })
   .add('LODASH FF', function () {
     _filter(_flatten(arr, arr, [arr]), isFunction);
-    bar.refresh();
+    // bar.refresh();
   })
   .run();

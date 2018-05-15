@@ -12,7 +12,7 @@ function getArray(num) {
 function toHumanSize(size, pad) {
   if (!pad) pad = 6;
   if (size < 1024 * 1024) return chalk.yellow(padEnd('~ 0', pad + 3));
-  const e = Math.floor(Math.log(size) / Math.log(1024));
+  var e = Math.floor(Math.log(size) / Math.log(1024));
   return chalk.yellow(
     padEnd((size / Math.pow(1024, e)).toFixed(2) + '', pad) +
     ' ' + ' KMGTP'.charAt(e) + 'B'
@@ -134,7 +134,37 @@ function round2(num) {
   return Math.round(num * 100) / 100;
 }
 
+function getObject() {
+  return {
+    asdf: 1243,
+    qwer: {
+      asdf: [1234, "afasdf", {}, null]
+    },
+    asdf2: 1243,
+    qwer2: {
+      asdf: [1234, "afasdf", {}, null]
+    },
+    asdf3: 1243,
+    qwer3: {
+      asdf: [1234, "afasdf", {}, null]
+    },
+    asdf4: 1243,
+    qwer4: {
+      asdf: [1234, "afasdf", {}, null]
+    },
+    asdf5: 1243,
+    qwer5: {
+      asdf: [1234, "afasdf", {}, null]
+    },
+    asdf6: 1243,
+    qwer6: {
+      asdf: [1234, "afasdf", {}, null]
+    }
+  }
+}
+
 module.exports = {
+  getObject: getObject,
   getArray: getArray,
   toHumanSize: toHumanSize,
   sleep: sleep,
