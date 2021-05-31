@@ -37,14 +37,14 @@ node JSON.parse/1.js
 
 ### Run a test on the several Node.js versions
 
-Install [nvm](https://github.com/creationix/nvm#install-script).
+Install [nvm](https://github.com/nvm-sh/nvm#install-script).
 Restart your shell.
-Install node versions 0.10, 0.12, 4, 5, 6, 7, 8, 9, 10.
+Install node versions 0.10, 0.12, 4, 6, 8, 10, 12, 14, 16.
 ```sh
-for v in 0.10 0.12 4 5 6 7 8 9 10; do nvm install $v; done
+for v in 0.10 0.12 4 6 8 10 12 14 16; do nvm install $v; done
 ```
 
-Run the test under several node.js versions like so:
+Run the test under several Node.js versions like so:
 ```sh
 ./all_nodes.sh args/1.js
 ```
